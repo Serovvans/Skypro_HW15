@@ -1,7 +1,7 @@
-from flask import current_app as app, jsonify, request
-from models import User, Offer, Order
-from create_app import add_new_data_to_db
 from app import db
+from flask import jsonify, request
+from models import User, Offer, Order
+from create_app import add_new_data_to_db, app
 
 
 @app.route("/users")
