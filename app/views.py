@@ -70,14 +70,28 @@ def page_add_users():
 def page_update_user(pk):
     data = request.json
     user = db.session.query(User).get(pk)
-    user = User(**data)
+    try:
+        user.id = data.get("id")
+        user.first_name = data.get("first_name")
+        user.last_name = data.get("last_name")
+        user.age = data.get("age")
+        user.email = data.get("email")
+        user.role = data.get("role")
+        user.phone = data.get("phone")
+    except Exception as e:
+        print(e)
+    db.session.commit()
 
-    return user
+    return user.return_data()
 
 
 @app.route("/users/<int:pk>", methods=["DELETE"])
 def page_delete_user(pk):
-    db.session.query(User).get(pk).delete()
+    user = db.session.query(User).get(pk)
+    db.session.delete(user)
+    db.session.commit()
+
+    return {}
 
 
 @app.route("/orders", methods=['POST'])
@@ -92,14 +106,30 @@ def page_add_orders():
 def page_update_order(pk):
     data = request.json
     order = db.session.query(Order).get(pk)
-    order = Order(**data)
+    try:
+        order.id = data.get("id")
+        order.name = data.get("name")
+        order.description = data.get("description")
+        order.start_date = data.get("start_date")
+        order.end_date = data.get("end_date")
+        order.address = data.get("address")
+        order.price = data.get("price")
+        order.customer_id = data.get("customer_id")
+        order.executor_id = data.get("executor_id")
+    except Exception as e:
+        print(e)
+    db.session.commit()
 
-    return order
+    return order.return_data()
 
 
 @app.route("/orders/<int:pk>", methods=["DELETE"])
 def page_delete_order(pk):
-    db.session.query(Order).get(pk).delete()
+    order = db.session.query(Order).get(pk)
+    db.session.delete(order)
+    db.session.commit()
+
+    return {}
 
 
 @app.route("/offers", methods=['POST'])
@@ -114,14 +144,24 @@ def page_add_offers():
 def page_update_offer(pk):
     data = request.json
     offer = db.session.query(Offer).get(pk)
-    offer = Offer(**data)
+    try:
+        offer.id = data.get("id")
+        offer.order_id = data.get("order_id")
+        offer.executor_id = data.get("executor_id")
+    except Exception as e:
+        print(e)
+    db.session.commit()
 
-    return offer
+    return offer.return_data()
 
 
 @app.route("/offers/<int:pk>", methods=["DELETE"])
 def page_delete_offer(pk):
-    db.session.query(Offer).get(pk).delete()
+    offer = db.session.query(Offer).get(pk)
+    db.session.delete(offer)
+    db.session.commit()
+
+    return {}
 
 
 if __name__ == "__main__":

@@ -44,6 +44,7 @@ def add_data_to_db():
 
 
 def create_app():
+    """Настройка приложения"""
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///:memory:"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['JSON_AS_ASCII'] = False
